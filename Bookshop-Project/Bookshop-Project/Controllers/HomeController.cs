@@ -1,16 +1,19 @@
 ﻿using Bookshop_Project.Models;
+using Bookshop_Project.Services.Books;
+
 using Microsoft.AspNetCore.Mvc;
+
 using System.Diagnostics;
 
 namespace Bookshop_Project.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IBookProvider bookProvider;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IBookProvider bookProvider)
         {
-            _logger = logger;
+            this.bookProvider = bookProvider;
         }
 
         public IActionResult Index()
@@ -18,9 +21,11 @@ namespace Bookshop_Project.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Books(string q, int page = 1)
         {
-            return View();
+            BookSearchViewModel model = await bookProvider.SearchBook(q, page);
+
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

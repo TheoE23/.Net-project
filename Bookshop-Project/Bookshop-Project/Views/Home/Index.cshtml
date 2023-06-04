@@ -5,4 +5,9 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <form class="d-flex" asp-controller="Home" asp-action="Books" method="get">
+        <input class="form-control me-2" name="q" type="search" placeholder="Search books" aria-label="Search books">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
 </div>

@@ -1,8 +1,27 @@
 {
   "version": 2,
-  "dgSpecHash": "Y7keaOk5eabrsEqQWdgrDkG6H7PVdYpHwCoKl9/8gFckQQtWqNgzf2pL/hJs+J1tCQNMDeTUYVK06Ulsxojm5g==",
+  "dgSpecHash": "IIHecaUS1lXypriZpbG4sxf6YuLXfH/gQIHWksydhSxF/bc9I1m/1Am9KRqBnUpDrQ0G8e0s5eDBMnyoa56HnA==",
   "success": true,
-  "projectFilePath": "E:\\Uni\\ASP.NET\\Bookshop-Project\\Bookshop-Project\\Bookshop-Project.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\own\\source\\repos\\.Net-project\\Bookshop-Project\\Bookshop-Project\\Bookshop-Project.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\own\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\6.0.16\\microsoft.aspnetcore.mvc.razor.extensions.6.0.16.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\6.0.16\\microsoft.aspnetcore.mvc.razor.runtimecompilation.6.0.16.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.16\\microsoft.aspnetcore.razor.language.6.0.16.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.2\\microsoft.codeanalysis.analyzers.3.3.2.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\microsoft.codeanalysis.common\\4.0.0\\microsoft.codeanalysis.common.4.0.0.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\microsoft.codeanalysis.csharp\\4.0.0\\microsoft.codeanalysis.csharp.4.0.0.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\microsoft.codeanalysis.razor\\6.0.16\\microsoft.codeanalysis.razor.6.0.16.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\microsoft.extensions.dependencymodel\\6.0.0\\microsoft.extensions.dependencymodel.6.0.0.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\microsoft.netcore.platforms\\2.1.2\\microsoft.netcore.platforms.2.1.2.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\system.collections.immutable\\5.0.0\\system.collections.immutable.5.0.0.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\system.reflection.metadata\\5.0.0\\system.reflection.metadata.5.0.0.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\system.text.encoding.codepages\\4.5.1\\system.text.encoding.codepages.4.5.1.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512",
+    "C:\\Users\\own\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"
+  ],
   "logs": []
 }
