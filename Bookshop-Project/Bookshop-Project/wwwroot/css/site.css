@@ -16,3 +16,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#mainHeader {
+    width: 100%;
+    height: 85px;
+    margin: 0px auto;
+    background-color: #990033;
+    opacity: 0.9;
+}
