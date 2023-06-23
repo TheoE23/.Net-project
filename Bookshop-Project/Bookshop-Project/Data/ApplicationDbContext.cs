@@ -4,7 +4,7 @@ using Bookshop_Project.Models;
 using Bookshop_Project.Data;
 using Microsoft.AspNetCore.Identity;
 
-public class ApplicationDbContext : IdentityDbContext<User>
+public class ApplicationDbContext : IdentityDbContext<User,IdentityRole,string>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -12,7 +12,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
     }
 
     public DbSet<User> Users { get; set; }
-
+    public DbSet<BookPrice> BookPrices { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

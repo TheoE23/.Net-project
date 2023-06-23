@@ -34,34 +34,13 @@ namespace Bookshop_Project.Services
 
                 var json = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<OpenLibrarySearchResult>(json);
-
-                var bookViewModels = new List<BookViewModel>();
-
-                // Iterate over the search results and create BookViewModel objects
-                foreach (var doc in result.Docs)
+                var bookViewModels = result?.Docs.Select(doc => new BookViewModel
                 {
-                    if (doc.Cover_i != null)
-                    {
-                        var bookViewModel = new BookViewModel
-                        {
-                            Title = doc.Title,
-                            Author = doc.AuthorName != null ? string.Join(", ", doc.AuthorName) : "Unknown",
-                            CoverUrl = $"https://covers.openlibrary.org/b/id/{doc.Cover_i}-L.jpg"
-                        };
-                        bookViewModels.Add(bookViewModel);
-                    }
-                    else
-                    {
-                        var bookViewModel = new BookViewModel
-                        {
-                            Title = doc.Title,
-                            Author = doc.AuthorName != null ? string.Join(", ", doc.AuthorName) : "Unknown",
-                            CoverUrl = ""
-                        };
-                        bookViewModels.Add(bookViewModel);
-                    }
-
-                }
+                    key = doc.Key,
+                    Title = doc.Title,
+                    Author = doc.Author_name != null ? string.Join(", ", doc.Author_name) : "Unknown",
+                    CoverUrl = doc.Cover_i != null ? $"https://covers.openlibrary.org/b/id/{doc.Cover_i}-L.jpg" : ""
+                }).ToList();
 
                 return bookViewModels;
             }

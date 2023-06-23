@@ -20,7 +20,9 @@ builder.Services.AddDefaultIdentity<User>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 6;
 })
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.Configure<BookDataEndpointOptions>(builder.Configuration.GetSection(nameof(BookDataEndpointOptions)));
 
@@ -57,6 +59,25 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     dbContext.Database.EnsureCreated();
     dbContext.Database.Migrate();
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    var adminUser = await userManager.FindByNameAsync("admin");
+    if (adminUser == null)
+    {
+        adminUser = new User
+        {
+            UserName = "admin",
+            Email = "admin@abv.bg",
+        };
+
+        var password = "123456";
+        adminUser.PasswordHash = userManager.PasswordHasher.HashPassword(adminUser, password);
+
+        await userManager.CreateAsync(adminUser);
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
 }
 
 app.UseCookiePolicy();

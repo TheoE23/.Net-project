@@ -32,8 +32,8 @@ public class UserController : Controller
         {
             return View(model);
         }
-        var user = await _userManager.FindByNameAsync(model.Email);
-        if (user != null)
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
         {
             var identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
@@ -60,14 +60,15 @@ public class UserController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = new User { UserName = model.Email, Email = model.Email,Password=model.Password };
+            var passwordHasher = new PasswordHasher<User>();
+            var user = new User { UserName = model.Email, Email = model.Email};
+            user.PasswordHash = passwordHasher.HashPassword(user, model.Password);
             var result = await _userManager.CreateAsync(user);
             if (result.Succeeded)
             {
                 user.EmailConfirmed = true;
                 await _userManager.UpdateAsync(user);
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                // Redirect to the desired page
                 return RedirectToAction("Index", "Home");
             }
             else
