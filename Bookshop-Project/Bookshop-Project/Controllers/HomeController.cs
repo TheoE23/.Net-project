@@ -1,19 +1,16 @@
-﻿using Bookshop_Project.Models;
-using Bookshop_Project.Services.Books;
-
+﻿using Bookshop_Project.Services;
 using Microsoft.AspNetCore.Mvc;
-
-using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Bookshop_Project.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IBookProvider bookProvider;
+        private readonly OpenLibraryService _openLibraryService;
 
-        public HomeController(IBookProvider bookProvider)
+        public HomeController(OpenLibraryService openLibraryService)
         {
-            this.bookProvider = bookProvider;
+            _openLibraryService = openLibraryService;
         }
 
         public IActionResult Index()
@@ -21,17 +18,18 @@ namespace Bookshop_Project.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Books(string q, int page = 1)
+        [HttpPost]
+        public async Task<IActionResult> Books(string q)
         {
-            BookSearchViewModel model = await bookProvider.SearchBook(q, page);
+            if (string.IsNullOrEmpty(q))
+            {
+                // Handle empty query
+                return RedirectToAction("Index");
+            }
 
-            return View(model);
-        }
+            var bookViewModels = await _openLibraryService.SearchBooks( q);
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("Books", bookViewModels);
         }
     }
 }

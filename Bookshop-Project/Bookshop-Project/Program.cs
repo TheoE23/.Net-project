@@ -1,8 +1,8 @@
 using Bookshop_Project.Constants;
-using Bookshop_Project.Services.Books;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Bookshop_Project.Data;
+using Bookshop_Project.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +31,7 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddHttpClient(HttpClientNames.BookProviderClient);
 
-builder.Services.AddTransient<IBookProvider, OpenLibraryBookProvider>();
+builder.Services.AddHttpClient<OpenLibraryService>();
 
 var app = builder.Build();
 

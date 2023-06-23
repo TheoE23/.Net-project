@@ -1,22 +1,24 @@
-﻿@model BookSearchViewModel
+﻿@model List<Bookshop_Project.Models.BookViewModel>
 
 @{
     ViewData["Title"] = "Books";
 }
-
-<ul>
-    @foreach (var result in Model.Results)
+<div class="row row-cols-3 g-3">
+    @foreach (var result in Model)
     {
-        <li>@result.Title</li>
+        <div class="col">
+            <div class="card">
+                @if (result.CoverUrl == "")
+                {
+                    <img src="../assets/alt.jpg" class="card-img-top" alt="" style="height: 400px" />
+                }else{
+                <img src="@result.CoverUrl" class="card-img-top" alt="../assets/alt.jpg" style="height: 400px" />
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@result.Title</h5>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+        </div>
     }
-</ul>
-
-<div class="d-flex justify-content-center gap-3">
-    <a asp-controller="Home" asp-action="Books" asp-route-q="@Model.Search" asp-route-page="@(Model.Page - 1)" class="btn btn-primary @(Model.Start == 0 ? "disabled" : "")">
-        Previous Page
-    </a>
-
-    <a asp-controller="Home" asp-action="Books" asp-route-q="@Model.Search" asp-route-page="@(Model.Page + 1)" class="btn btn-primary @(Model.Found < Model.Start + 100 ? "disabled": "")">
-        Next Page
-    </a>
 </div>
