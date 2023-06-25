@@ -1,5 +1,6 @@
 ﻿@using Bookshop_Project.Data
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Routing
 @inject UserManager<User> userManager
 
 <div class="row row-cols-3 g-3">
@@ -18,11 +19,27 @@
                 <div class="card-body">
                     <h5 class="card-title">@result.Title</h5>
                     <p class="card-text">@result.Author</p>
+                    <h5>@result.Price</h5>
                 </div>
 
-                @if (Context.User.Identity.IsAuthenticated && (await userManager.IsInRoleAsync(await userManager.GetUserAsync(Context.User), "Admin")))
+                @if (Context.User.Identity.IsAuthenticated && (await userManager.IsInRoleAsync(await userManager.GetUserAsync(Context.User), "Admin") && @result.Price==0))
                 {
                     <button class="add-price" data-book-id="@result.key">Add Price</button>
+                }
+                @if (Context.User.Identity.IsAuthenticated && !(await userManager.IsInRoleAsync(await userManager.GetUserAsync(Context.User), "Admin")))
+                {
+                    @if (result.Price == 0)
+                    {
+                        <form asp-controller="Home" asp-action="AskPrice">
+                            <input type="hidden" name="bookId" value="@result.key" />
+                        <input type="hidden" name="title" value="@result.Title" />
+                        <input type="hidden" name="author" value="@result.Author" />
+                        <button type="submit" class="btn btn-primary">Ask Price</button>
+                    </form>
+                    }else{
+
+                    <button class="add-price" data-book-id="@result.key">Add To Cart</button>
+                    }
                 }
             </div>
         </div>

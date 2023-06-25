@@ -1,6 +1,7 @@
 ﻿using Bookshop_Project.Data;
 using Bookshop_Project.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -46,8 +47,29 @@ namespace Bookshop_Project.Controllers
 
             _context.BookPrices.Add(bookPrice);
             await _context.SaveChangesAsync();
-
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AskPrice(string bookId, string title, string author)
+        {
+            var existingRequest = _context.BookPriceRequests.FirstOrDefault(r => r.key == bookId);
+
+            if (existingRequest == null)
+            {
+
+                var bookPriceRequest = new BookPriceRequest
+                {
+                    key = bookId,
+                    Title = title,
+                    Author = author
+                };
+
+                _context.BookPriceRequests.Add(bookPriceRequest);
+                await _context.SaveChangesAsync();
+            }
+
+            return View("Index");
         }
     }
 }

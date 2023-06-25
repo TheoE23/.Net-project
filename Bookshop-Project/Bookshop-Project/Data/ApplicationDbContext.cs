@@ -13,6 +13,8 @@ public class ApplicationDbContext : IdentityDbContext<User,IdentityRole,string>
 
     public DbSet<User> Users { get; set; }
     public DbSet<BookPrice> BookPrices { get; set; }
+
+    public DbSet<BookPriceRequest> BookPriceRequests { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
