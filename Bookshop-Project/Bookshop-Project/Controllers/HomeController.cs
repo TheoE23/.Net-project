@@ -37,6 +37,7 @@ namespace Bookshop_Project.Controllers
         }
 
         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> AddPrice(string bookId, decimal price)
         {
             var bookPrice = new BookPrice
@@ -46,9 +47,17 @@ namespace Bookshop_Project.Controllers
             };
 
             _context.BookPrices.Add(bookPrice);
+
+            var existingRequest = await _context.BookPriceRequests.FirstOrDefaultAsync(r => r.key == bookId);
+            if (existingRequest != null)
+            {
+                _context.BookPriceRequests.Remove(existingRequest);
+            }
+
             await _context.SaveChangesAsync();
-            return View();
+            return View("Index");
         }
+
 
         [HttpPost]
         public async Task<IActionResult> AskPrice(string bookId, string title, string author)
@@ -64,12 +73,17 @@ namespace Bookshop_Project.Controllers
                     Title = title,
                     Author = author
                 };
-
                 _context.BookPriceRequests.Add(bookPriceRequest);
                 await _context.SaveChangesAsync();
             }
-
             return View("Index");
+        }
+
+        public async Task<IActionResult> PriceRequests()
+        {
+            var bookPriceRequests = await _context.BookPriceRequests.ToListAsync();
+
+            return View(bookPriceRequests);
         }
     }
 }

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Bookshop_Project.Data.BookPriceRequest>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    <a href="#" data-action="AddPrice" data-book-id="@item.key">Add Price</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('a[data-action="AddPrice"]').click(function () {
+                var bookId = $(this).data('book-id');
+                var price = prompt("Enter the price:");
+
+                if (price !== null && price.trim() !== "") {
+                    var url = '@Url.Action("AddPrice", "Home")';
+
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: { bookId: bookId, price: price },
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

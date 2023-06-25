@@ -35,6 +35,13 @@
                                     <button type="submit" class="btn btn-link">Logout</button>
                                 </form>
                             </li>
+                            var user = await SignInManager.UserManager.GetUserAsync(User);
+                            if (user!=null && await SignInManager.UserManager.IsInRoleAsync(user, "Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" style="font-size: 22px; font-weight: bold;" asp-controller="Home" asp-action="PriceRequests">Price Requests</a>
+                                </li>
+                            }
                         }else{
                         <li class="nav-item">
                             <a class="nav-link text-dark" style="font-size: 22px; font-weight: bold;" asp-area="Identity" asp-controller="User" asp-action="Login">LogIn</a>
