@@ -87,7 +87,7 @@ namespace Bookshop_Project.Controllers
         {
             var bookPriceRequests = await _context.BookPriceRequests.ToListAsync();
 
-            return RedirectToAction("Index");
+            return View(bookPriceRequests);
         }
     }
 }
