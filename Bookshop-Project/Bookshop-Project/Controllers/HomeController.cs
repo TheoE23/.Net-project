@@ -1,5 +1,6 @@
 ﻿using Bookshop_Project.Data;
 using Bookshop_Project.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +19,11 @@ namespace Bookshop_Project.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            string q = "History";
+            var bookViewModels = await _openLibraryService.SearchBooks(q,3);
+            return View(bookViewModels);
         }
 
         [HttpPost]
@@ -31,13 +34,13 @@ namespace Bookshop_Project.Controllers
                 return RedirectToAction("Index");
             }
 
-            var bookViewModels = await _openLibraryService.SearchBooks( q);
+            var bookViewModels = await _openLibraryService.SearchBooks( q,null);
 
             return View("Books", bookViewModels);
         }
 
         [HttpPost]
-        [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddPrice(string bookId, decimal price)
         {
             var bookPrice = new BookPrice
@@ -55,11 +58,12 @@ namespace Bookshop_Project.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AskPrice(string bookId, string title, string author)
         {
             var existingRequest = _context.BookPriceRequests.FirstOrDefault(r => r.key == bookId);
@@ -76,14 +80,14 @@ namespace Bookshop_Project.Controllers
                 _context.BookPriceRequests.Add(bookPriceRequest);
                 await _context.SaveChangesAsync();
             }
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> PriceRequests()
         {
             var bookPriceRequests = await _context.BookPriceRequests.ToListAsync();
 
-            return View(bookPriceRequests);
+            return RedirectToAction("Index");
         }
     }
 }

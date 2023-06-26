@@ -1,6 +1,7 @@
 ﻿using Bookshop_Project.Controllers;
 using Bookshop_Project.Data;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -82,8 +83,7 @@ public class UserController : Controller
 
         return View("~/Areas/Identity/Pages/Account/Register.cshtml", model);
     }
-
-    [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();

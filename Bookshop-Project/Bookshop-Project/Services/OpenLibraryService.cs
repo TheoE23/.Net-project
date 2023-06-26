@@ -20,16 +20,21 @@ namespace Bookshop_Project.Services
             _context = context;
         }
 
-        public async Task<List<BookViewModel>> SearchBooks(string query)
+        public async Task<List<BookViewModel>> SearchBooks(string query,int? count)
         {
             if (string.IsNullOrEmpty(query))
             {
                 return new List<BookViewModel>();
             }
-
-            try
+            string apiUrl = "";
+            if (count != null)
             {
-                var apiUrl = $"https://openlibrary.org/search.json?q={query}";
+               apiUrl = $"https://openlibrary.org/search.json?q={query}&limit={count}";
+            }
+            else
+            {
+                apiUrl = $"https://openlibrary.org/search.json?q={query}&limit=30";
+            }
                 var response = await _httpClient.GetAsync(apiUrl);
                 response.EnsureSuccessStatusCode();
 
@@ -46,7 +51,6 @@ namespace Bookshop_Project.Services
                         CoverUrl = doc.Cover_i != null ? $"https://covers.openlibrary.org/b/id/{doc.Cover_i}-L.jpg" : ""
                     };
 
-                    // Fetch the price from the database
                     var bookPrice = bookPrices.FirstOrDefault(x=>x.key==doc.Key);
                     if (bookPrice != null)
                     {
@@ -59,12 +63,6 @@ namespace Bookshop_Project.Services
 
 
                 return fetchedBookViewModels.ToList();
-            }
-            catch (Exception ex)
-            {
-                return new List<BookViewModel>();
-            }
         }
-
     }
 }
